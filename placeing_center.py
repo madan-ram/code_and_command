@@ -74,7 +74,6 @@ def create_fixed_image_shape(img, frame_size=(200, 200, 3), random_fill=True, mo
 		image_frame[: , :] = img
 	return image_frame
 
-
 def getImmediateSubdirectories(dir):
     """
         this function return the immediate subdirectory list
