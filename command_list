@@ -1,0 +1,2 @@
+#list number of files inside sub-directory with its sub-directory name
+for i in * ; do echo `ls $i | wc -l` $i ; done
