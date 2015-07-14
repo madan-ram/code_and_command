@@ -1,4 +1,4 @@
-#list number of files inside sub-directory with its sub-directory name
+# list number of files inside sub-directory with its sub-directory name
 for i in * ; do echo `ls $i | wc -l` $i ; done
 
 # command to update master with competed version
@@ -6,3 +6,6 @@ git checkout [version]
 git merge -s ours master
 git checkout master
 git merge [version]
+
+#command to delete s3 bucket
+aws s3 rm --recursive s3://[bucket_name]
