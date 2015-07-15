@@ -9,3 +9,6 @@ git merge [version]
 
 #command to delete s3 bucket
 aws s3 rm --recursive s3://[bucket_name]
+
+#command to delete s3 bucket
+aws s3 rb s3://[bucket_name] --force
