@@ -8,6 +8,11 @@ import math
 import sys
 import itertools
 
+def test_addDir(dir, path):
+	if not os.path.exists(path+'/'+dir):
+		os.makedirs(path+'/'+dir)
+	return path+'/'+dir
+
 def generate_window_locations(location, patch_shape, stride=0.5, grid_shape=5):
 	"""
 		Generate a list of window location based on location, patch_shape, grid_shape and stride
