@@ -295,8 +295,8 @@ else:
     clr = pickle.load(fr)
     fr.close()
 
-
-
+# reset the file_list for non repatative data
+file_list = getFiles(sys.argv[1])
 number_of_iteration =  get_num_batch(len(file_list), NETWORK_BATCH_SIZE)
 file_list_path = []
 images_feature = None
