@@ -291,7 +291,7 @@ if len(sys.argv) != 4:
     pickle.dump(clr, fw)
     fw.close()
 else:
-    fr = open('CENTROID.file')
+    fr = open(sys.argv[3])
     clr = pickle.load(fr)
     fr.close()
 
