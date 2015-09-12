@@ -1,0 +1,2 @@
+C code for autoencoder.
+http://eric-yuan.me/dae/
