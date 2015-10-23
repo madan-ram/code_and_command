@@ -7,31 +7,79 @@ from os import listdir
 import math
 import sys
 import itertools
+import urllib
 
 def test_addDir(dir, path):
 	if not os.path.exists(path+'/'+dir):
 		os.makedirs(path+'/'+dir)
 	return path+'/'+dir
 
-def generate_window_locations(location, patch_shape, stride=0.5, grid_shape=5):
-	"""
-		Generate a list of window location based on location, patch_shape, grid_shape and stride
+def url_imread(url):
+	req = urllib.urlopen(url)
+	arr = np.asarray(bytearray(req.read()), dtype=np.uint8)
+	img = cv2.imdecode(arr,-1) # 'load it as it is'
+	return img
 
-		location:
-			(y, x) a tuple for center location of window.
-		patch_shape:
-			(y, x) a tuple which represent window shape.
-		stride {default: 0.5}:
-			a float which represent stride to be taken.
-		grid_shape :
-			a integer that represent grid shape where grid_x == grid_y
+def reshape_image(img, frame_size=(200, 200, 3), mode='crop'):
+	image = None
+	if mode == 'fit':
+		X1, Y1, _ = frame_size
+		X2, Y2 = img.shape[1], img.shape[0]
 
-	"""
+		if X2 > Y2:
+			X_new = X1
+			Y_new = int(round(float(Y2*X_new)/float(X2)))
+		else:
+			Y_new = Y1
+			X_new = int(round(float(X2*Y_new)/float(Y2)))
+
+		img = cv2.resize(img, (X_new, Y_new))
+
+		X_space_center = ((X1 - X_new)/2)
+		Y_space_center = ((Y1 - Y_new)/2)
+
+		image = img
+
+	elif mode == 'crop':
+		X1, Y1, _ = frame_size
+
+		X2, Y2 = img.shape[1], img.shape[0]
+
+		#increase the size of smaller length (width or hegiht)
+		if X2 > Y2:
+			Y_new = Y1
+			X_new = int(round(float(X2*Y_new)/float(Y2)))
+		else:
+			X_new = X1
+			Y_new = int(round(float(Y2*X_new)/float(X2)))
+
+		img = cv2.resize(img, (X_new, Y_new))
+
+		
+		X_space_clip = (X_new - X1)/2
+		Y_space_clip = (Y_new - Y1)/2
+
+		#trim image both top, down, left and right
+		if X_space_clip == 0 and Y_space_clip != 0:
+			img = img[Y_space_clip:-Y_space_clip, :]
+		elif Y_space_clip == 0 and X_space_clip != 0:
+			img = img[:, X_space_clip:-X_space_clip]
+
+		if img.shape[0] != X1:
+			img = img[1:, :]
+		if img.shape[1] != Y1:
+			img = img[:, 1:]
+
+		image = img
+	return image
+
+def generate_window_locations(center, patch_shape, stride=0.5, grid_shape=5):
+
 	assert(grid_shape%2 != 0), "grid_shape should be odd number"
 
 	assert(stride != 0), "stride should not be <= 0"
 
-	center_y, center_x = location
+	center_y, center_x = center
 	string = ""
 	mapping = {}
 
@@ -46,6 +94,10 @@ def generate_window_locations(location, patch_shape, stride=0.5, grid_shape=5):
 		string += str(i)
 	windows_list = []	
 	sequences = np.asarray(list(itertools.product(string, repeat=2)), dtype="int32")
+
+	# if grid_shape%2 != 0:
+	# 	center_y = (center_y - (stride * patch_shape[0])/2.0)
+	# 	center_x = (center_x - (stride * patch_shape[1])/2.0)
 
 	for y, x in sequences:
 		new_center_y, new_center_x = center_y +patch_shape[0]*mapping[y]*stride, center_x+patch_shape[1]*mapping[x]*stride
@@ -132,3 +184,4 @@ def feature_normalization(data, type='standardization', params = None):
 		Xmin = Xmin.astype('float')
 		Z = (data - Xmin)/(Xmax - Xmin)
 		return Z, Xmax, Xmin
+
