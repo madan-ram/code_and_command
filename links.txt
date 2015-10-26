@@ -1,2 +1,9 @@
 C code for autoencoder.
 http://eric-yuan.me/dae/
+
+Link to download imagenet data
+cmd:option('--metaURL', 'https://stife076.files.wordpress.com/2015/02/metadata.zip', 'URL for file containing serialized JSON mapping word net ids to class index, name and description')
+cmd:option('--trainURL', 'http://www.image-net.org/challenges/LSVRC/2012/nonpub/ILSVRC2012_img_train.tar', 'URL of train images')
+cmd:option('--validURL', 'http://www.image-net.org/challenges/LSVRC/2012/nonpub/ILSVRC2012_img_val.tar', 'URL of validation images')
+cmd:option('--testURL', 'http://www.image-net.org/challenges/LSVRC/2012/nonpub/ILSVRC2012_img_test.tar', 'URL of test images')
+cmd:option('--devkitURL', 'http://image-net.org/image/ilsvrc2014/ILSVRC2014_devkit.tgz', 'URL of devkit')
