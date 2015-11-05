@@ -11,8 +11,14 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
+try:
+	caffe_root = os.environ['CAFFE_HOME'] + '/'
+except Exception as e:
+	print e
+	print 'please check $CAFFE_HOME is set'
+	print 'default use => /home/invenzone/DIGITS/caffe/'
+	caffe_root = '/home/invenzone/DIGITS/caffe/'  # this file is expected to be in {caffe_root}/examples
 
-caffe_root = '/home/invenzone/digits-1.0/caffe/'  # this file is expected to be in {caffe_root}/examples
 import sys
 sys.path.insert(0, caffe_root + 'python/')
 import caffe
