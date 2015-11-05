@@ -46,3 +46,13 @@ holds in computer memory.
 [1] Practical Recommendations for Gradient-Based Training of Deep
 Architectures
 Yoshua Bengio
+
+
+Additional Data Transformations for Training
+	Imagenet classification system [6], three types of image transformations were used to
+augment the training set. The first was to take a randomly located crop of 224x224 pixels
+from a 256x256 pixel image capturing some translation invariance. The second was to flip
+the image horizontally to capture the reflection invariance. The final data transformation was
+to add randomly generated lighting which tries to capture invariance to the change in
+lighting and minor color variation. We add additional transformations that extend the
+translation invariance and color invariance.
