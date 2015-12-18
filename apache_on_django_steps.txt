@@ -1,0 +1,38 @@
+1) Install this pachage
+	sudo apt-get update
+	sudo apt-get install python-pip apache2 libapache2-mod-wsgi
+
+2) Go to /etc/site-avilable
+	touch django.conf
+3) copy the below code
+	<!--
+		examples
+		PATH_DJNAGO_APP_SETTING_DIR /home/ubuntu/image_server/Inmobi-Image-Search/image_search/e_search
+		PATH_DJNAGO_APP_DIR /home/ubuntu/image_server/Inmobi-Image-Search/image_search
+	--!>
+
+
+
+
+	<VirtualHost *:8000>
+	        <Directory <PATH_DJNAGO_APP_SETTING_DIR>>
+	                <Files wsgi.py>
+	                        Require all granted
+	                </Files>
+	        </Directory>
+
+	        WSGIDaemonProcess image_search processes=18 threads=1 python-path=<PATH_DJNAGO_APP_DIR>:/usr/local/lib/python2.7/dist-packages
+	        WSGIProcessGroup image_search
+	        WSGIApplicationGroup %{GLOBAL}
+	        WSGIScriptAlias / <PATH_DJNAGO_APP_SETTING_DIR>/wsgi.py
+
+	</VirtualHost>
+
+4) enable port by adding "Listen 8000" inside /etc/apache2/port.conf
+
+5) add required env_variable in /etc/apache2/envvars
+
+6) enable server conf for apache start server
+sudo a2ensite <path_to_django.conf>
+
+6)set apps path based on django BASE_DIR found in settings.py
