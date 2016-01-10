@@ -24,3 +24,7 @@ do
     tar -xvf $a -C $a_dir
     rm $a
 done
+
+#command to create password less login
+ssh-keygen -t rsa
+cat .ssh/id_rsa.pub | ssh [username]@[ip] 'cat >> .ssh/authorized_keys'
