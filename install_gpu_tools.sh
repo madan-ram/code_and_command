@@ -3,7 +3,7 @@
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
-sudo apt-get install build-essential
+sudo apt-get install build-essential -y
 
 #Install many dependencies, such as support for reading and writing image files, drawing on the screen, some needed tools, other libraries, etc…
 sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev libtiff4-dev libjasper-dev libopenexr-dev cmake python-dev python-numpy python-tk libtbb-dev libeigen3-dev yasm libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev libx264-dev libqt4-dev libqt4-opengl-dev sphinx-common texlive-latex-extra libv4l-dev libdc1394-22-dev libavcodec-dev libavformat-dev libswscale-dev default-jdk ant libvtk5-qt4-dev -y
@@ -34,8 +34,8 @@ wget http://developer.download.nvidia.com/compute/cuda/6_5/rel/installers/cuda_6
 sudo chmod 775 cuda_6.5.14_linux_64.run
 
 sudo apt-get install freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libgl1-mesa-glx libglu1-mesa libglu1-mesa-dev -y
-sudo apt-get install linux-generic
-sudo init 6
+sudo apt-get install linux-generic -y
+# sudo init 6
 
 sudo ./cuda_6.5.14_linux_64.run -override -driver -toolkit -samples -silent -verbose
 sudo sh -c 'echo "/usr/local/cuda-6.5/lib64" >> /etc/ld.so.conf'
