@@ -77,9 +77,9 @@ def create_fixed_image_shape(img, frame_size=(200, 200, 3), random_fill=True, mo
 	if mode == 'fit':
 		X1, Y1, _ = frame_size
 		if random_fill:
-			image_frame = np.random.randint(0, high=255, size=frame_size)
+			image_frame = np.asarray(np.random.uniform(np.min(img), high=np.max(img), size=frame_size), dtype=img.dtype)
 		else:
-			image_frame = np.zeros(frame_size, dtype='uint8')
+			image_frame = np.zeros(frame_size, dtype=img.dtype)
 
 		X2, Y2 = img.shape[1], img.shape[0]
 
@@ -101,7 +101,7 @@ def create_fixed_image_shape(img, frame_size=(200, 200, 3), random_fill=True, mo
 
 	elif mode == 'crop':
 		X1, Y1, _ = frame_size
-		image_frame = np.zeros(frame_size, dtype='uint8')
+		image_frame = np.zeros(frame_size, dtype=img.dtype)
 
 		X2, Y2 = img.shape[1], img.shape[0]
 
