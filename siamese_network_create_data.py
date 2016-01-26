@@ -139,6 +139,7 @@ manager = multiprocessing.Manager()
 image_list = manager.list()
 label_list = manager.list()
 
+total_data_length = 0
 _id = 0
 for class_label in xrange(num_of_batch):
     _dir = dirs[class_label]
@@ -154,9 +155,9 @@ for class_label in xrange(num_of_batch):
             anchor_image_path = dir_image_files_path[y]
             select_random_image_same_dir = random.sample(remove_by_index(dir_image_files_path, y), int(sys.argv[2]))
             select_random_image_other_dir = random.sample(dir_image_files_path_other, int(sys.argv[3]))
-            [data_combination_with_label.append((anchor_image_path, path, 1, _id, class_label, image_list, label_list)) for path in select_random_image_same_dir]
+            [data_combination_with_label.append((anchor_image_path, path, 1, str(_id)+'_'+str(k), class_label, image_list, label_list)) for k, path in enumerate(select_random_image_same_dir)]
             _id += 1
-            [data_combination_with_label.append((anchor_image_path, path, 0, _id, class_label, image_list, label_list)) for path in select_random_image_other_dir]
+            [data_combination_with_label.append((anchor_image_path, path, 0, str(_id)+'_'+str(k), class_label, image_list, label_list)) for k, path in enumerate(select_random_image_other_dir)]
             _id += 1
         except AnchorImReadFailed as e:
             print e
@@ -169,6 +170,9 @@ for class_label in xrange(num_of_batch):
             pass
 
     if len(data_combination_with_label) >= batch_size:
+        total_data_length += len(data_combination_with_label)
+        print "completed data read so far", total_data_length
+
         se = time.time()
         message = "created list of file to be read", len(data_combination_with_label)
         print_log(st, se, message)
