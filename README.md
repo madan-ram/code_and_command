@@ -23,10 +23,13 @@ How make ubuntu PC act as internet gateway
 	netmask  x.x.x.x 
 	gateway x.x.x.x
 
+	Restart you network manager
+	sudo service network-manager restart
+
 	Now edit /etc/sysctl.conf and uncomment:
 
 	# net.ipv4.ip_forward=1
 	so that it reads:
 	net.ipv4.ip_forward=1
 
-	you want to run "sudo sysctl -p /etc/sysctl.conf" to make the new value take effect.
+	You want to run "sudo sysctl -p /etc/sysctl.conf" to make the new value take effect.
