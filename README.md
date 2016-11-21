@@ -33,3 +33,5 @@ How make ubuntu PC act as internet gateway
 	net.ipv4.ip_forward=1
 
 	You want to run "sudo sysctl -p /etc/sysctl.conf" to make the new value take effect.
+
+Code to split data by running python train_split.py [complete data] [train split] [valid split] 80
