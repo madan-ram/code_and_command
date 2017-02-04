@@ -28,3 +28,6 @@ done
 #command to create password less login
 ssh-keygen -t rsa
 cat .ssh/id_rsa.pub | ssh [username]@[ip] 'cat >> .ssh/authorized_keys'
+
+#Use below as a paramater to prevent certificate verification by urllib or certificate error
+PYTHONHTTPSVERIFY=0 <Command>
